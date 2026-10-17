@@ -19,7 +19,7 @@ def load_matches(path=DATA_FILE):
 
 def split_seasons(matches):
     seasons = sorted(matches["Season"].dropna().unique())
-    if len(seasons) < HISTORICAL_SEASONS + 1:
+    if len(seasons) < HISTORICAL_SEASONS + 1: 
         raise ValueError("Dataset needs two completed seasons plus the current season.")
     current = seasons[-1]
     historical = seasons[-(HISTORICAL_SEASONS + 1):-1]
