@@ -102,12 +102,12 @@ def expected_goals(matches, home_team, away_team, before_date=None):
     league_away_goals = historical["FTAG"].mean() if len(historical) else 1.1
 
     home_attack_strength = home_attack / league_home_goals if league_home_goals else 1
-    away_defence_strength = away_defence / league_away_goals if league_away_goals else 1
+    away_defensive_weakness = away_defence / league_away_goals if league_away_goals else 1
     away_attack_strength = away_attack / league_away_goals if league_away_goals else 1
-    home_defence_strength = home_defence / league_home_goals if league_home_goals else 1
+    home_defensive_weakness = home_defence / league_home_goals if league_home_goals else 1
 
-    home_xg = league_home_goals * home_attack_strength * away_defence_strength
-    away_xg = league_away_goals * away_attack_strength * home_defence_strength
+    home_xg = league_home_goals * home_attack_strength * away_defensive_weakness
+    away_xg = league_away_goals * away_attack_strength * home_defensive_weakness
     return float(np.clip(home_xg, 0.05, 4.5)), float(np.clip(away_xg, 0.05, 4.5))
 
 
@@ -153,10 +153,10 @@ def backtest(matches):
 
 
 def print_prediction(result):
-    print("\n" + "=" * 55)
+    print("\\n" + "=" * 55)
     print(f"{result['home_team']} vs {result['away_team']}")
     print("=" * 55)
-    print(f"Expected goals: {result['home_team']} {result['home_xg']:.2f} - {result['away_xg']:.2f} {result['away_team']}")
+    print(f"Expected goals: {result['home_team']} {result['home_xg']:.2f} - {result['away_team']} {result['away_xg']:.2f} {result['away_team']}")
     print(f"Home win : {result['home_win']:.1%}")
     print(f"Draw     : {result['draw']:.1%}")
     print(f"Away win : {result['away_win']:.1%}")
@@ -186,4 +186,4 @@ if __name__ == "__main__":
     print_prediction(result) 
 
     # accuracy, n = backtest(matches)
-    # print(f"\nBacktest accuracy: {accuracy:.1%} ({n} matches)")
+    # print(f"\\nBacktest accuracy: {accuracy:.1%} ({n} matches)")
